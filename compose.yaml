@@ -7,7 +7,8 @@ services:
     image: docker.io/library/postgres:16
     restart: unless-stopped
     volumes:
-      - /mnt/data/appdata/postgres:/var/lib/postgresql/data
+      - /mnt/data/appdata/postgres:/var/lib/postgresql/data:rw
+      - /mnt/data/backup:/backup:rw
     env_file: .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
