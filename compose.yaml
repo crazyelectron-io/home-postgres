@@ -1,8 +1,8 @@
 ---
 services:
 
-  postgres_cluster:
-    container_name: postgres_cluster
+  postgrescluster:
+    container_name: postgrescluster
     hostname: postgrescluster
     image: docker.io/library/postgres:16
     restart: unless-stopped
@@ -19,6 +19,24 @@ services:
       retries: 3
     networks:
       - backend
+
+  # Example Postgres Database setup
+  # postgresdatabase:
+  #   container_name: postgresdatabase
+  #   hostname: postgresdatabase
+  #   image: docker.io/library/postgres:16
+  #   depends_on:
+  #     - postgrescluster
+  #   restart: "no"
+  #   command:
+  #     - bash
+  #     - -c
+  #     - |
+  #       PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "CREATE USER gebruiker4 WITH PASSWORD 'test101';"
+  #       PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "CREATE DATABASE testdb4;"
+  #       PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "GRANT ALL PRIVILEGES ON DATABASE testdb4 TO gebruiker4;"
+  #   networks:
+  #     - backend
 
 networks:
   backend:
